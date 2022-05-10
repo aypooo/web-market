@@ -1,11 +1,12 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
+import React from 'react'
 import { product } from '../../models/Product'
 import styles from '../../styles/ItemList.module.css'
 import useScrollFadeIn from '../../utils/client/useScrollFadeIn'
 
 
-const Item: NextPage<{ data: product }> = ({ data }) => {
+const Item: NextPage<{ data: product }> = React.memo(({ data }) => {
     return (
         <div className={styles.content}>
             <Link href={`/product?_id=${data._id}`} passHref>
@@ -23,9 +24,9 @@ const Item: NextPage<{ data: product }> = ({ data }) => {
             </Link>
         </div>
     )
-}
+})
 
-const ItemList: NextPage<{ data: Array<product> }> = ({ data }) => {
+const ItemList: NextPage<{ data: Array<product> }> = React.memo(({ data }) => {
     const animationItem = useScrollFadeIn('up', 1, 0)
     return (
         <div {...animationItem} className={styles.style}>
@@ -38,6 +39,6 @@ const ItemList: NextPage<{ data: Array<product> }> = ({ data }) => {
             </div>
         </div>
     )
-}
+})
 
 export default ItemList

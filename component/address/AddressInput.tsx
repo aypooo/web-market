@@ -1,7 +1,8 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useCallback } from "react"
 import DaumPost from "./DaumPost";
 import addressStyle from "../../styles/address/address.module.css"
 import { NextPage } from "next";
+import React from "react";
 
 
 const AddressInput: NextPage<{ setAddressFunction: Function, setZonecodeFunction: Function }> = ({ setAddressFunction, setZonecodeFunction }) => {
@@ -14,16 +15,15 @@ const AddressInput: NextPage<{ setAddressFunction: Function, setZonecodeFunction
     setIsOpenPost(!isOpenPost)
   }
 
-  const getAddress = (value: any) => {
+  const getAddress = useCallback((value: any) => {
     setAddressFunction(value)
     setAddress(value)
-  }
-  const getZonecode = (value: any) => {
+  }, [address])
+  const getZonecode = useCallback((value: any) => {
     setZonecodeFunction(value)
     setZonecode(value)
 
-  }
-
+  }, [zonecode])
   return (
     <div className={addressStyle.addressform}>
 
@@ -44,4 +44,4 @@ const AddressInput: NextPage<{ setAddressFunction: Function, setZonecodeFunction
   )
 }
 
-export default AddressInput
+export default React.memo(AddressInput)

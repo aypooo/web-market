@@ -1,9 +1,10 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
+import React from 'react'
 import { product } from '../../models/Product'
 import styles from '../../styles/PickedRank.module.css'
 
-const Item: NextPage<{ data: product }> = ({ data }) => {
+const Item: NextPage<{ data: product }> = React.memo(({ data }) => {
     return (
         <div className={styles.content}>
             <Link href={`/product?_id=${data._id}`} passHref>
@@ -21,9 +22,9 @@ const Item: NextPage<{ data: product }> = ({ data }) => {
             </Link>
         </div >
     )
-}
+})
 
-const PickRank: NextPage<{ data: Array<product> }> = ({ data }) => {
+const PickRank: NextPage<{ data: Array<product> }> = React.memo(({ data }) => {
     return (
         <div className={styles.style}>
             <div>
@@ -34,6 +35,6 @@ const PickRank: NextPage<{ data: Array<product> }> = ({ data }) => {
             </div>
         </div>
     )
-}
+})
 
 export default PickRank
