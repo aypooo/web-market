@@ -1,3 +1,4 @@
+import Product from '../../../models/Product';
 import User from '../../../models/User';
 import { encryptPassword } from '../../../utils/encrypt';
 import { Err, Ok } from '../../../utils/server/commonError';
@@ -11,8 +12,8 @@ const handler = customHandler()
             let { user_id } = req.cookies
             let { required } = req.query
             const result = await User.findOne({ _id: user_id })
-                .populate({ path: "likelist", model: User })
-                .populate({ path: "cartlist", model: User })
+                .populate({ path: "likelist", model: Product })
+                .populate({ path: "cartlist", model: Product })
                 .lean()
             if (!result) {
                 return Err(res, "misterious error with token")

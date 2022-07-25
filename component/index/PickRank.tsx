@@ -10,7 +10,7 @@ const Item: NextPage<{ data: product }> = React.memo(({ data }) => {
             <Link href={`/product?_id=${data._id}`} passHref>
                 <div className={styles.lList}>
                     <div className={styles.thumb}>
-                        <img className={styles.imageUrl} src={data.imageUrl}></img>
+                        <img className={styles.imageUrl} src={data.thumbnailUrl[0]}></img>
                     </div>
                     <div className={styles.info}>
                         <div className={styles.name}>{data.name.replaceAll(/<\/*b>/gi, "")}</div>

@@ -29,7 +29,7 @@ export function validateRequest(validations: ValidationChain[]) {
                 next()
             }
         } else {
-            Err(res, result.array())
+            throw result.array()
         }
     }
 }

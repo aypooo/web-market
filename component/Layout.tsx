@@ -2,9 +2,10 @@ import FooterCompo from "./index/FooterCompo";
 import HeaderCompo from "./index/HeaderCompo";
 import layoutStyle from "../styles/layout.module.css"
 import { NextPage } from "next";
+import { ReactElement } from "react";
 
 
-const Layout: NextPage = ({ children }) => {
+const Layout: NextPage<{ children: ReactElement }> = ({ children }) => {
     return (
         <div className={layoutStyle.container}>
             <header className={layoutStyle.header}>

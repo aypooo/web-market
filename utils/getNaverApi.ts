@@ -28,7 +28,7 @@ export async function insertDataByCategory() {
                 for (let data of result) {
                     const { title, image, lprice, mallName, brand, maker, category1, category2, category3, category4 } = data
                     const name = title.replaceAll(/<b>/ig, "").replaceAll(/<\/b>/ig, "").replaceAll(/＆amp;/ig, "")
-                    const product_data: product = { name, price: parseInt(lprice), category1, category2, category3, category4, imageUrl: image, mallName, brand, maker }
+                    const product_data: product = { name, price: parseInt(lprice), category1, category2, category3, category4, imageUrl: [], mallName, brand, maker, thumbnailUrl: [image] }
                     await new Product(product_data).save()
                 }
             }

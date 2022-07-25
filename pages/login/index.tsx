@@ -35,7 +35,7 @@ const Home: NextPage = () => {
       const loginQuery: loginQuery = { id, password, fingerprint, persistent }
       const res = await customAxios.post("/api/login", loginQuery)
       if (res.status == 200) {
-        alert("로그인 성공")
+        alert(`${id}님 환영합니다!`)
         router.push("/")
       } else {
         alert("아이디 혹은 비밀번호가 틀렸습니다")
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
       alert("서버 에러가 발생하였습니다")
     }
   }
-  const { data, isLoading, isServerError } = useCustomSWR("/api/user/me")
+  const { data, isLoading, isServerError } = useCustomSWR("/api/user/me", {}, true)
   if (isLoading) return <div><Loading /></div>
   if (isServerError) {
     alert("서버 에러가 발생하였습니다")

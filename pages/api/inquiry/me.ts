@@ -1,7 +1,7 @@
 import { body, cookie, query } from "express-validator";
 import Inquiry, { inquiry } from "../../../models/Inquiry";
 import User from "../../../models/User";
-import { Err, Ok } from "../../../utils/server/commonError";
+import { Err, Ok, ValueNotFoundErr } from "../../../utils/server/commonError";
 import { customHandler, validate } from "../../../utils/server/commonHandler";
 import { validateRequest } from "../../../utils/server/middleware";
 
@@ -40,7 +40,7 @@ const handler = customHandler()
             const { _id, qacategory, title, content } = req.body
             const target: inquiry | null = await Inquiry.findOne({ user_id, _id })
             if (!target) {
-                return Err(res, target)
+                return ValueNotFoundErr(res, "inquiry not found")
             }
             const result = await Inquiry.updateOne({ user_id, _id }, { $set: { qacategory, title, content, createdAt: new Date() } })
             return Ok(res, result)

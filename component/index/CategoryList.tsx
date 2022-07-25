@@ -9,7 +9,7 @@ const CategoryList: NextPage<{ data: product }> = ({ data }) => {
             <div className={CategoryListStyle.content}>
                 <Link href={`/product?_id=${data._id}`} passHref>
                     <div className={CategoryListStyle.tumbs}>
-                        <img className={CategoryListStyle.image} src={data.imageUrl}></img>
+                        <img className={CategoryListStyle.image} src={data.thumbnailUrl[0]}></img>
                     </div>
                 </Link>
                 <div className={CategoryListStyle.itemInfo}>

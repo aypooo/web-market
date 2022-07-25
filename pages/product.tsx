@@ -122,7 +122,7 @@ const Product: NextPage = (props: any) => {
             <div className={styles.container}>
                 <div className={styles.purchaseList}>
                     <div className={styles.turmb}>
-                        <img className={styles.itemImage} src={props.imageUrl}></img>
+                        <img className={styles.itemImage} src={props.thumbnailUrl[0]}></img>
                     </div>
                     <div className={styles.purchasePart}>
                         <div>

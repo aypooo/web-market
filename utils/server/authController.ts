@@ -56,9 +56,12 @@ async function checkAuth(conditions: authCondition[], req: NextApiRequest) {
 
 export default async function authController(req: NextApiRequest, res: NextApiResponse, next: NextHandler) {
     if (await checkAuth(ADMINCONDITION, req)) {
-        await serverAuth(req, res), saveLog(req, res), validate([cookie("role").equals("admin")])(req, res)
+        await serverAuth(req, res)
+        await saveLog(req, res)
+        await validate([cookie("role").equals("admin")])(req, res)
     } else if (await checkAuth(USERCONDITION, req)) {
-        await serverAuth(req, res), saveLog(req, res)
+        await serverAuth(req, res)
+        await saveLog(req, res)
     } else {
         await saveLog(req, res)
     }

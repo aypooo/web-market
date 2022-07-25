@@ -4,27 +4,21 @@ export function Ok(res: NextApiResponse, result: any, statusCode?: number) {
     return res.status(statusCode || 200).json({ result })
 }
 
-export function errorToJson(err: Error): any {
-    let { name, message, stack, cause } = err
-    try {
+export function errorToJson(err: any): any {
+    if (err instanceof Error) {
+        let { name, message, stack, cause } = err
         const stackList = stack?.split("\n    ")
-        if (cause !== undefined && cause instanceof Error) {
-            return { name, message, stack: stackList, cause: errorToJson(cause) }
-        } else {
-            return { name, message, stack: stackList, cause }
-        }
-    } catch (error) {
-        return { name, message, stack, cause: error }
+        return { name, message, stack: stackList, cause: errorToJson(cause) }
+    } else {
+        return err
     }
 }
 
-export function commonErr(res: NextApiResponse, error: Error, statusCode?: number) {
-    let body: any
-    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
-        body = errorToJson(error)
-    } else {
-        const { name, message } = error
-        body = { name, message }
+export function commonErr(res: NextApiResponse, error: any, statusCode?: number) {
+    const body = errorToJson(error)
+    if (process.env.NODE_ENV === "production") {
+        body.cause = undefined
+        body.stack = undefined
     }
     return res.status(statusCode || 400).json({ error: body })
 }
@@ -44,6 +38,18 @@ export function UncaughtErr(res: NextApiResponse, message: string, cause?: Error
 export function AuthFailedErr(res: NextApiResponse, message: string, cause?: Error) {
     const error = new Error(message, { cause })
     error.name = "AUTH_FAILED_ERROR"
+    return commonErr(res, error)
+}
+
+export function ServerErr(res: NextApiResponse, message: string, cause?: Error) {
+    const error = new Error(message, { cause })
+    error.name = "SERVER_ERROR"
+    return commonErr(res, error)
+}
+
+export function ValueNotFoundErr(res: NextApiResponse, message: string, cause?: Error) {
+    const error = new Error(message, { cause })
+    error.name = "VALUE_NOT_FOUND_ERROR"
     return commonErr(res, error)
 }
 

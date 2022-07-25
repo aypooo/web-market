@@ -114,7 +114,7 @@ const Productlist: NextPage = () => {
     */
     const createProduct: MouseEventHandler<HTMLButtonElement> = async e => {
         try {
-            const result = await customAxios.post("/api/product", { inputs, thumbnailDataUrl, imageDataUrl })
+            const result = await customAxios.post("/api/product", { ...inputs, thumbnailDataUrl, imageDataUrl })
             if (result.status === 200) {
                 alert("업로드 성공")
             } else {
@@ -167,7 +167,7 @@ const Productlist: NextPage = () => {
                                 <td>
                                     <div className={productListStyle.filebox}>
                                         <ul>
-                                            {thumbnailDataUrl && thumbnailDataUrl?.map((file) => <li><img src={file} /></li>)}
+                                            {thumbnailDataUrl && thumbnailDataUrl?.map((file, i) => <li key={i}><img src={file} alt="" /></li>)}
                                         </ul>
                                         <label >
                                             <input className={productListStyle.file_input} type="file" multiple accept="image/png, image/gif, image/jpeg" onChange={savethumbDataUrl} />
@@ -180,7 +180,7 @@ const Productlist: NextPage = () => {
                                 <td>
                                     <div className={productListStyle.filebox}>
                                         <ul>
-                                            {imageDataUrl && imageDataUrl?.map((file) => <li><img src={file} /></li>)}
+                                            {imageDataUrl && imageDataUrl?.map((file, i) => <li key={i}><img src={file} /></li>)}
                                         </ul>
                                         <label >
                                             <input className={productListStyle.file_input} type="file" multiple accept="image/png, image/gif, image/jpeg" onChange={saveImageDataUrl} />
